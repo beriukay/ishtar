@@ -1,9 +1,5 @@
 /**
  * skip-link-focus-fix.js
- *
- * Helps with accessibility for keyboard only users.
- *
- * Learn more: https://github.com/Automattic/ishtar/pull/136
  */
 ( function() {
 	var is_webkit = navigator.userAgent.toLowerCase().indexOf( 'webkit' ) > -1,

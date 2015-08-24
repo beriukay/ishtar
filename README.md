@@ -1,9 +1,7 @@
-[![Build Status](https://travis-ci.org/Automattic/ishtar.svg?branch=master)](https://travis-ci.org/Automattic/ishtar)
-
 ishtar
 ===
 
-Hi. I'm a starter theme called `ishtar`, or `underscores`, if you like. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+Hi. I'm a starter theme called `ishtar. I intend to become an elegant, sexy, useful, and awesome WordPress theme. 
 
 My ultra-minimal CSS might make me look like theme tartare but that means less stuff to get in your way when you're designing your awesome theme. Here are some of the other more interesting things you'll find here:
 
