@@ -11,16 +11,12 @@
 
 ?>
 
-	</div><!-- #content -->
+</div><!-- #main .site-main -->
+     <footer id="colophon" class="site-footer" role="contentinfo">
+          <div class="site-info"></div><!-- .site-info -->
+     </footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
 
-	<footer id="colophon" class="site-footer" role="contentinfo">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'ishtar' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'ishtar' ), 'WordPress' ); ?></a>
-			<span class="sep"> | </span>
-			<?php printf( esc_html__( 'Theme: %1$s by %2$s.', 'ishtar' ), 'ishtar', '<a href="https://github.com/beriukay" rel="designer">beriukay</a>' ); ?>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
 
 <?php wp_footer(); ?>
 
