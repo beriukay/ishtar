@@ -8,30 +8,15 @@
 // Prints HTML with meta information for post-date/time and author.	
 if ( ! function_exists( 'ishtar_posted_on' ) ) :
 function ishtar_posted_on() {
-	$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-		$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
-	}
-
-	$time_string = sprintf( $time_string,
+	printf( __( 'Posted on <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'ishtar' ),
+		esc_url( get_permalink() ),
+		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
 		esc_html( get_the_date() ),
-		esc_attr( get_the_modified_date( 'c' ) ),
-		esc_html( get_the_modified_date() )
+		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+		esc_attr( sprintf( __( 'View all posts by %s', 'ishtar' ), get_the_author() ) ),
+		esc_html( get_the_author() )
 	);
-
-	$posted_on = sprintf(
-		esc_html_x( 'Posted on %s', 'post date', 'ishtar' ),
-		'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
-	);
-
-	$byline = sprintf(
-		esc_html_x( 'by %s', 'post author', 'ishtar' ),
-		'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
-	);
-
-	echo '<span class="posted-on">' . $posted_on . '</span><span class="byline"> ' . $byline . '</span>'; // WPCS: XSS OK.
-
 }
 endif;
 
@@ -66,16 +51,11 @@ endif;
 function ishtar_categorized_blog() {
 	if ( false === ( $all_the_cool_cats = get_transient( 'ishtar_categories' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
-		$all_the_cool_cats = get_categories( array(
-			'fields'     => 'ids',
-			'hide_empty' => 1,
-			// We only need to know if there is more than one category.
-			'number'     => 2,
-		) );
+		$all_the_cool_cats = get_categories( array( 'hide_empty' => 1,) );
 
 		// Count the number of categories that are attached to the posts.
 		$all_the_cool_cats = count( $all_the_cool_cats );
-		set_transient( 'ishtar_categories', $all_the_cool_cats );
+		set_transient( 'all_the_cool_cats', $all_the_cool_cats );
 	}
 	return ( $all_the_cool_cats > 1 );
 }
@@ -85,7 +65,7 @@ function ishtar_category_transient_flusher() {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
-	delete_transient( 'ishtar_categories' ); // Like, beat it. Dig?
+	delete_transient( 'all_the_cool_cats' ); // Like, beat it. Dig?
 }
 add_action( 'edit_category', 'ishtar_category_transient_flusher' );
 add_action( 'save_post',     'ishtar_category_transient_flusher' );

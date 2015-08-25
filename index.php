@@ -17,25 +17,29 @@ get_header(); ?>
 		<?php if ( have_posts() ) : ?>
 
 			<?php if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-					<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'shape' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
+				<header class="entry-header">
+					<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'ishtar' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
 				</header>
+
+			<?php if ( is_search() ) : // Only display Excerpts for Search ?>
+			<div class="entry-summary">
+	 			<?php the_excerpt(); ?>
+			</div><!-- .entry-summary -->
+			<?php else : ?>
+			<div class="entry-content">
+	 			<?php the_content( __( 'Continue reading <span class="meta-nav">→</span>', 'ishtar' ) ); ?>
+	 			<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'ishtar' ), 'after' => '</div>' ) ); ?>
+			</div><!-- .entry-content -->
+
 			<?php endif; ?>
+
+<?php endif; ?>
 
 			<?php /* Start the Loop */ ?>
 			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php
-
-					/*
-					 * Include the Post-Format-specific template for the content.
-					 * If you want to override this in a child theme, then include a file
-					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-					 */
-					get_template_part( 'template-parts/content', get_post_format() );
-				?>
-
+				<div class="entry-summary">
+					<?php the_excerpt(); ?>
+				</div><!-- .entry-summary -->
 			<?php endwhile; ?>
 
 			<?php the_posts_navigation(); ?>
