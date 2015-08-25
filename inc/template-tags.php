@@ -1,16 +1,12 @@
 <?php
 /**
  * Custom template tags for this theme.
- *
  * Eventually, some of the functionality here could be replaced by core features.
- *
  * @package ishtar
  */
 
+// Prints HTML with meta information for the current post-date/time and author.
 if ( ! function_exists( 'ishtar_posted_on' ) ) :
-/**
- * Prints HTML with meta information for the current post-date/time and author.
- */
 function ishtar_posted_on() {
 	$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
@@ -39,10 +35,8 @@ function ishtar_posted_on() {
 }
 endif;
 
+// Prints HTML with meta information for the categories, tags and comments.
 if ( ! function_exists( 'ishtar_entry_footer' ) ) :
-/**
- * Prints HTML with meta information for the categories, tags and comments.
- */
 function ishtar_entry_footer() {
 	// Hide category and tag text for pages.
 	if ( 'post' === get_post_type() ) {
@@ -69,9 +63,7 @@ function ishtar_entry_footer() {
 }
 endif;
 
-/**
- * Returns true if a blog has more than 1 category.
- *
+/* Returns true if a blog has more than 1 category.
  * @return bool
  */
 function ishtar_categorized_blog() {
@@ -90,25 +82,15 @@ function ishtar_categorized_blog() {
 
 		set_transient( 'ishtar_categories', $all_the_cool_cats );
 	}
-
-	if ( $all_the_cool_cats > 1 ) {
-		// This blog has more than 1 category so ishtar_categorized_blog should return true.
-		return true;
-	} else {
-		// This blog has only 1 category so ishtar_categorized_blog should return false.
-		return false;
-	}
+	return ( $all_the_cool_cats > 1 );
 }
 
-/**
- * Flush out the transients used in ishtar_categorized_blog.
- */
+// Flush out the transients used in ishtar_categorized_blog.
 function ishtar_category_transient_flusher() {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
-	// Like, beat it. Dig?
-	delete_transient( 'ishtar_categories' );
+	delete_transient( 'ishtar_categories' ); // Like, beat it. Dig?
 }
 add_action( 'edit_category', 'ishtar_category_transient_flusher' );
 add_action( 'save_post',     'ishtar_category_transient_flusher' );
